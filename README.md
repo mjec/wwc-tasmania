@@ -6,7 +6,7 @@ Automate Tasmanian working with children check verification
 Simply automates submitting data to and parsing responses from
 https://wwcforms.justice.tas.gov.au/RegistrationSearch.aspx
 
-Depends on [requests][http://python-requests.org/] and [lxml][http://lxml.de/].
+Depends on [requests](http://python-requests.org/) and [lxml](http://lxml.de/).
 
 Methods
 -------
