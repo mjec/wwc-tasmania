@@ -2,6 +2,7 @@ import requests
 from lxml import html
 
 WWCURL = 'https://wwcforms.justice.tas.gov.au/RegistrationSearch.aspx'
+VERSION = '0.1'
 
 class InvalidCardException(ValueError):
     pass
@@ -39,12 +40,12 @@ def check_card(card_number, surname):
     payload['ctl00$MainContent$txtCardNumber'] = card_number
     payload['ctl00$MainContent$txtSurname'] = surname
 
-    resp = session.post(WWCURL, data=payload, headers={'User-Agent': 'Automated WWC checker/0.1 (see http://mjec.net/ for contact details)'})
+    resp = session.post(WWCURL, data=payload, headers={'User-Agent': 'Automated WWC checker/{} (see https://github.com/mjec/wwc-tasmania)'.format(VERSION)})
 
     tree = html.fromstring(resp.text)
 
     error_t1 = tree.xpath("//span[@id='ctl00_MainContent_lblSearchResult']")    # Incorrect name
-    error_t2 = tree.xpath("//td[@class='Paging']/ul/li")                        # Invalid card number
+    error_t2 = tree.xpath("//td[@class='Paging']/ul/li")                        # Invalid card number (preumably failed checksum)
 
     if len(error_t1) > 0:
         raise InvalidCardException(error_t1[0].text)
