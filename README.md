@@ -13,15 +13,19 @@ Methods
 
 `wwctas.card_is_valid(card_number, surname)`
 
-Returns `True` if and only if the card status is Registered. Returns False on
+Returns `True` if and only if the card status is Registered. Returns `False` on
 invalid card numbers or mismatching surname.
+
+Note that there may be values other than Registered which should return True in
+some circumstances (e.g. a conditional registration). This is currently not
+supported.
 
 
 `wwctas.check_card(card_number, surname)`
 
 Returns a dictionary with two elements:
 
- * `status` -- the card's status ("Registered" if valid)
+ * `status` -- the card's status ("Registered" if valid; other potential values unknown)
  * `name`   -- the card owner's full name (as returned, all caps)
 
 Raises InvalidCardException if `card_number` is invalid or does not match `surname`.
