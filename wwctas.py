@@ -14,7 +14,7 @@ def card_is_valid(card_number, surname):
         return ('Registered' == check_card(card_number, surname)['status'])
     except InvalidCardException:
         return False
-    
+
 def check_card(card_number, surname):
     """Returns a dictionary with two elements:
             status  --  the card's status ("Registered" if current)
@@ -44,8 +44,8 @@ def check_card(card_number, surname):
 
     tree = html.fromstring(resp.text)
 
-    error_t1 = tree.xpath("//span[@id='ctl00_MainContent_lblSearchResult']")    # Incorrect name
-    error_t2 = tree.xpath("//td[@class='Paging']/ul/li")                        # Invalid card number (preumably failed checksum)
+    error_t1 = tree.xpath("//span[@id='ctl00_ctl00_ctlMainContent_MainContent_lblSearchResult']")    # Incorrect name
+    error_t2 = tree.xpath("//td[@class='MessageError']/ul/li")                        # Invalid card number (preumably failed checksum)
 
     if len(error_t1) > 0:
         raise InvalidCardException(error_t1[0].text)
